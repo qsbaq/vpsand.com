@@ -8,5 +8,7 @@ import json
 
 
 def index(request):
-    goods = Goods.objects.all().values('company','dc',"cpu",'ram','disk','bandwidth','traffic','route','ipv4','arch','annual','stock','company__name')
-    return render(request, 'index.html', {'goods': json.dumps(list(goods)) })
+    goods = Goods.objects.all().values('pid','company','dc',"cpu",'ram','disk','bandwidth','traffic','route','ipv4','arch','annual','stock','company__name')
+    lastObj = Goods.objects.values('update_time').last()
+    update_time = lastObj['update_time'].strftime("%Y-%m-%d %H:%M:%S")
+    return render(request, 'index.html', {'goods': json.dumps(list(goods)) ,'update_time':update_time })

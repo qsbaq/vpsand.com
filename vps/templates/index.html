@@ -7,9 +7,9 @@
     <meta name="keywords" content="搬瓦工,VPS,bandwagonhost,搬瓦工优惠码,搬瓦工导购,搬瓦工库存,搬瓦工库存实时监控,搬瓦工库存监控|搬瓦工测评">
     <meta name="description" content="VPS库存监控是为方便VPS爱好者监控库存而推出，数据实时更新，完全免费，欢迎使用。">
     <!-- CSS only -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
-    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <script src="//cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="//cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
 
 </head>
 
@@ -22,7 +22,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
             <li class="nav-item ">
-                <a class="nav-link" href="/">Home </a>
+                <a class="nav-link" href="//www.jiloc.com">Home </a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="/vps-stocks.html">VPS库存监控列表</a>
@@ -30,7 +30,7 @@
 
             </ul>
             {% if user.get_username %}
-                欢迎：{{user.get_username}}<a href="/admin" class="btn btn-outline-success">后台管理</a>
+                <a href="/admin" class="btn btn-info">欢迎：{{user.get_username}} , 后台管理</a>
             {% endif %}
             <!-- <form class="form-inline mt-2 mt-md-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
@@ -43,8 +43,9 @@
     <div class="container-fluid" id="app">
         <section class="text-center">
             <h1>VPS库存监控列表</h1>
-            <p><a href="//www.jiloc.com/go/bwh">搬瓦工</a>优惠码：<code> BWH3HYATVBJW </code></p>
-        </section>
+            <p><a href="//www.jiloc.com/go/bwh">搬瓦工</a>优惠码：<code> BWH3HYATVBJW </code>,
+            <p>数据最后更新时间：<code>{{update_time}}</code></p>
+    </section>
         <table class="table table-striped table-bordered table-hover">
             <thead>
             <tr>
@@ -107,10 +108,10 @@ var app = new Vue({
             return $str;
         },
         stockToBuy: function(obj){
-            if( obj.stock === 'Y' ){
-                return '<a href="//www.jiloc.com/go/bwh-'+obj.pid+'" class="btn btn-primary active" role="button" aria-pressed="true">购买</a>'+obj.pid;
+            if( obj.stock === 1 ){
+                return '<a href="//www.jiloc.com/go/bwh-'+obj.pid+'" class="btn btn-primary active" role="button" aria-pressed="true">购买</a>';
             }else{
-                return '<button class="btn btn-secondary" disabled="true">售罄</button>'+obj.pid;
+                return '<button class="btn btn-secondary" disabled="true">售罄</button>';
             }
         }
     },
