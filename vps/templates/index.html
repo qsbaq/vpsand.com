@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>VPS库存监控</title>
+    <meta name="keywords" content="搬瓦工,VPS,bandwagonhost,搬瓦工优惠码,搬瓦工导购,搬瓦工库存,搬瓦工库存实时监控,搬瓦工库存监控|搬瓦工测评">
+    <meta name="description" content="VPS库存监控是为方便VPS爱好者监控库存而推出，数据实时更新，完全免费，欢迎使用。">
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="//www.jiloc.com">老季博客</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+                <a class="nav-link" href="/">Home </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/vps-stocks.html">VPS库存监控列表</a>
+            </li>
+
+            </ul>
+            {% if user.get_username %}
+                欢迎：{{user.get_username}}<a href="/admin" class="btn btn-outline-success">后台管理</a>
+            {% endif %}
+            <!-- <form class="form-inline mt-2 mt-md-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+        </div>
+    </nav>
+
+
+    <div class="container-fluid" id="app">
+        <section class="text-center">
+            <h1>VPS库存监控列表</h1>
+            <p><a href="//www.jiloc.com/go/bwh">搬瓦工</a>优惠码：<code> BWH3HYATVBJW </code></p>
+        </section>
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th v-for="title in titles">{[title]}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(item,index) in items">
+                <td>{[index+1]}</td>
+                <td>{[item.company__name]}</td>
+                <td>{[item.dc]}</td>
+                <td>{[item.cpu]}</td>
+                <td>{[item.ram]}</td>
+                <td>{[item.disk]}</td>
+                <td>{[item.bandwidth]}</td>
+                <td>{[item.traffic]}</td>
+                <td>{[item.route]}</td>
+                <td>{[item.ipv4]}</td>
+                <td>{[item.arch]}</td>
+                <td v-html="$options.filters.formatPrice(item)"></td>
+                <td v-html="$options.filters.stockToBuy(item)" ></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        <div class="container text-center" >
+            <p>本页面所有数据均来自互联网。如侵害到您的权益请联系 <a href="mailto:admin@laoji.org">admin#laoji.org </a>。</p>
+        </div>
+    </footer>
+
+
+</body>
+
+<script type="text/javascript">
+$(function () {
+  var nua = navigator.userAgent
+  var isAndroid = (nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1 && nua.indexOf('Chrome') === -1)
+  if (isAndroid) {
+    $('select.form-control').removeClass('form-control').css('width', '100%')
+  }
+})
+var app = new Vue({
+    delimiters:['{[', ']}'],
+    el: '#app',
+    data: {
+        items: {{goods|safe}},
+        titles : ['序号','服务商','机房',"CPU",'内存','硬盘','带宽','流量','线路','IPV4','架构','价格','库存']
+    },　　
+    filters:{
+        formatPrice: function(obj){
+            $str = '';
+            if(obj.annual)
+                $str += obj.annual+'/年<br/>';
+            if(obj.quarter)
+                $str += obj.quarter+'/季<br/>';
+            if(obj.month)
+                $str += obj.month+'/月<br/>';
+            return $str;
+        },
+        stockToBuy: function(obj){
+            if( obj.stock === 'Y' ){
+                return '<a href="//www.jiloc.com/go/bwh-'+obj.pid+'" class="btn btn-primary active" role="button" aria-pressed="true">购买</a>'+obj.pid;
+            }else{
+                return '<button class="btn btn-secondary" disabled="true">售罄</button>'+obj.pid;
+            }
+        }
+    },
+    created: function () {
+        var self = this;
+        // $.ajax({
+        //     // url: 'https://vpsdalao.com/api/records?provider=Bandwagon',
+        //     url: '/ajax_goods',
+        //     type: 'get',
+        //     data: {},
+        //     dataType: 'json'
+        // }).then(function (res) {
+        //     // console.log(res.data)
+        //     self.items = res.data
+        // }).fail(function () {
+        //     console.log('失败');
+        // })
+    },
+
+})
+</script>
+</html>

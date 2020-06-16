@@ -5,6 +5,7 @@ from django.db import models
 class Company(models.Model):
     name = models.CharField('商家名称', max_length=256, unique=True)
     url = models.CharField('网址', max_length=256)
+    out_of_stock_string = models.CharField('缺货字符串',max_length=256,default='Out of Stock') 
     update_time = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -36,16 +37,16 @@ class Goods(models.Model):
         ('LA','LA'),
         ('HK','HK')
     )
-    companyId = models.ForeignKey(Company , to_field='id' , on_delete=models.DO_NOTHING , verbose_name="商家",blank=False,null=False)
+    company = models.ForeignKey(Company , to_field='id' , on_delete=models.DO_NOTHING , verbose_name="商家",blank=False,null=False)
     pid = models.IntegerField(verbose_name='PID',blank=False,null=False )
     dc = models.CharField('机房位置', max_length=256,choices=dcChoices)
-    cpu = models.IntegerField('CPU', max_length=2,default=1)
+    cpu = models.CharField('CPU', max_length=128,default=1)
     ram = models.CharField('内存', max_length=256)
     disk = models.CharField('硬盘', max_length=256)
     bandwidth = models.CharField('带宽', max_length=256)
     traffic = models.CharField('流量', max_length=256)
     route = models.CharField('线路', max_length=256,choices=lineChoices)
-    ipv4 = models.IntegerField('IPV4', max_length=2,default=1)
+    ipv4 = models.CharField('IPV4', max_length=128,default=1)
     arch = models.CharField('架构', max_length=256,choices=archChoices)
     annual = models.CharField('年付', max_length=256,)
     quarter = models.CharField('季付', max_length=256,blank=True,null=True)

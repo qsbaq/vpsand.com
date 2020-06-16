@@ -18,14 +18,14 @@ class CompanyAdmin(admin.ModelAdmin):
 
 
 class GoodsAdmin(admin.ModelAdmin):
-    list_display = ('companyId', 'pid', 'ram','cpu','dc','disk','bandwidth','traffic','route','ipv4','arch','annual', 'stockStatus', 'update_time')
+    list_display = ('company', 'pid', 'ram','cpu','dc','disk','bandwidth','traffic','route','ipv4','arch','annual', 'stockStatus', 'update_time')
     list_per_page = 20
     # list_editable = ['companyId',]
-    list_filter = ('companyId','stock', )
+    list_filter = ('company','stock', )
     # search_fields = ['companyId']
-    ordering = ('companyId',)
+    ordering = ('company',)
     readonly_fields = ('stock', )
-    list_display_links = ('companyId',)
+    list_display_links = ('company',)
     def stockStatus(self , obj):
         if obj.stock == 0:
             return format_html('<span style="color:red">{}</span>','无货')
