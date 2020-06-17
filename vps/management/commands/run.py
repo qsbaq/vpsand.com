@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
+'''
+运行方法：
+python .\manage.py run
+'''
 from django.core.management.base import BaseCommand, CommandError
 from vps.models import Company ,Goods
 from urllib import request
