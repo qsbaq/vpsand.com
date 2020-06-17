@@ -25,7 +25,7 @@ SECRET_KEY = '#qy=9a#mm#axurn=le0bwh0qc(^hcjbjg!zgpl8c*1$9f)@p&k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['hubjj.com']
 
 
 # Application definition
