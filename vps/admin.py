@@ -19,9 +19,9 @@ class CompanyAdmin(admin.ModelAdmin):
 
 class GoodsAdmin(admin.ModelAdmin):
     list_display = ('company', 'pid', 'ram','cpu','dc','disk','bandwidth','traffic','route','ipv4','arch','annual', 'stockStatus', 'update_time')
-    list_per_page = 20
+    list_per_page = 100
     # list_editable = ['companyId',]
-    list_filter = ('company','stock', )
+    list_filter = ('company__name','dc','stock','arch' )
     # search_fields = ['companyId']
     ordering = ('company',)
     readonly_fields = ('stock', )
