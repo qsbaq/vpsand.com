@@ -100,11 +100,11 @@ var app = new Vue({
         formatPrice: function(obj){
             $str = '';
             if(obj.annual)
-                $str += obj.annual+'/年<br/>';
+                $str += '$'+obj.annual+'/年<br/>';
             if(obj.quarter)
-                $str += obj.quarter+'/季<br/>';
+                $str += '$'+obj.quarter+'/季<br/>';
             if(obj.month)
-                $str += obj.month+'/月<br/>';
+                $str += '$'+obj.month+'/月<br/>';
             return $str;
         },
         stockToBuy: function(obj){
