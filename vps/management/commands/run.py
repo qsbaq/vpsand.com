@@ -10,14 +10,17 @@ from urllib import request
 import time
 # from vps.models import Goods
 import sys,threading
+lock = threading.Semaphore(12)
 class Command(BaseCommand):
     def handle(self, *args, **options):
         goodsObj = Goods.objects.all()
+        
         for g in goodsObj:
             t = threading.Thread(target=self.updateStock, args=(g,))
             t.start()
 
     def updateStock(self,good):
+        lock.acquire()	#计数器获得锁
         url = good.company.url + str(good.pid)
         header={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'}
         try:
@@ -37,3 +40,4 @@ class Command(BaseCommand):
             stock = 'Unknown'
 
         print(time.strftime('%Y-%m-%d %H:%M:%S')+' -- '+url + ' -- ' + str(status) +' -- '+ str(stock))
+        lock.release()	#计数器释放锁
