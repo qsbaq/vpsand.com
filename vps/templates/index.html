@@ -146,12 +146,19 @@ var app = new Vue({
             return $str;
         },
         stockToBuy: function(obj){
-            if( obj.stock === 1 ){
-                // return '<a href="//www.jiloc.com/go/bwh-'+obj.pid+'" class="btn btn-primary active" role="button" aria-pressed="true">购买</a>';
-                return '<a href="'+obj.company__url+obj.pid+'" class="btn btn-primary active" role="button" aria-pressed="true">购买</a>';
+            if(obj.company__connect_pid){
+                url = obj.company__url+obj.pid;
             }else{
-                return '<button class="btn btn-secondary" disabled="true">售罄</button>';
+                url = obj.company__url;
             }
+            sold = '<a href="'+url+'" class="btn btn-primary active" role="button" aria-pressed="true">购买</a>';
+            soldout = '<button class="btn btn-secondary" disabled="true">售罄</button>';
+
+            if( (obj.need_monitor && obj.stock) ||  ! obj.need_monitor )
+                return sold;
+            else
+                return soldout;
+            
         }
     },
     created: function () {
