@@ -36,8 +36,12 @@ class Goods(models.Model):
         ('PCCW','PCCW'),
     )
     dcChoices = (
+        ('ATL','ATL'),
         ('LA','LA'),
-        ('HK','HK')
+        ('SEA','SEA'),
+        ('HK','HK'),
+        ('Taiwan','Taiwan'),
+        ('Frankfurt','Frankfurt'),
     )
     company = models.ForeignKey(Company , to_field='id' , on_delete=models.DO_NOTHING , verbose_name="商家",blank=False,null=False)
     pid = models.IntegerField(verbose_name='PID',blank=False,null=False )
