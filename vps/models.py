@@ -44,7 +44,7 @@ class Goods(models.Model):
         ('Frankfurt','Frankfurt'),
     )
     company = models.ForeignKey(Company , to_field='id' , on_delete=models.DO_NOTHING , verbose_name="商家",blank=False,null=False)
-    pid = models.IntegerField(verbose_name='PID',blank=False,null=False )
+    pid = models.IntegerField(verbose_name='PID',blank=True,null=False )
     dc = models.CharField('机房位置', max_length=256,choices=dcChoices)
     cpu = models.IntegerField('CPU', default=1)
     ram = models.CharField('内存', max_length=256)
@@ -54,7 +54,7 @@ class Goods(models.Model):
     route = models.CharField('线路', max_length=256,choices=lineChoices)
     ipv4 = models.IntegerField('IPV4',default=1)
     arch = models.CharField('架构', max_length=256,choices=archChoices,default='KVM')
-    annual = models.CharField('年付', max_length=256,)
+    annual = models.CharField('年付', max_length=256,blank=True,null=False )
     quarter = models.CharField('季付', max_length=256,blank=True,null=True)
     month = models.CharField('月付', max_length=256,blank=True,null=True)
     stock = models.IntegerField( choices=stockChoices,verbose_name='库存' , default=0 )

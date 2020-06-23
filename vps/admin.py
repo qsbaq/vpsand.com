@@ -24,7 +24,7 @@ class GoodsAdmin(admin.ModelAdmin):
     list_filter = ('company__name','dc','stock','arch' )
     # search_fields = ['companyId']
     ordering = ('company',)
-    readonly_fields = ('stock', )
+    # readonly_fields = ('stock', )
     list_display_links = ('company',)
     def stockStatus(self , obj):
         if obj.stock == 0:
