@@ -5,7 +5,7 @@ booleanChoices = ((0,"否"),(1,"是"))
 
 class Company(models.Model):
     name = models.CharField('商家名称', max_length=256, unique=True)
-    url = models.CharField('网址', max_length=256)
+    url = models.CharField('网址', max_length=256 , help_text='https://bwh88.net/aff.php?aff=991&pid=')
     need_monitor = models.BooleanField(verbose_name='是否需要监控',choices=booleanChoices,default=1)
     out_of_stock_string = models.CharField('缺货字符串',max_length=256,default='Out of Stock') 
     update_time = models.DateTimeField(auto_now=True)
