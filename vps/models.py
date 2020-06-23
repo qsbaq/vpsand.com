@@ -44,7 +44,7 @@ class Goods(models.Model):
         ('Frankfurt','Frankfurt'),
     )
     company = models.ForeignKey(Company , to_field='id' , on_delete=models.DO_NOTHING , verbose_name="商家",blank=False,null=False)
-    pid = models.IntegerField(verbose_name='PID',blank=True,null=False )
+    pid = models.IntegerField(verbose_name='PID',blank=True,null=True )
     dc = models.CharField('机房位置', max_length=256,choices=dcChoices)
     cpu = models.IntegerField('CPU', default=1)
     ram = models.CharField('内存', max_length=256)
