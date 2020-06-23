@@ -153,8 +153,7 @@ var app = new Vue({
             }
             sold = '<a href="'+url+'" class="btn btn-primary active" role="button" aria-pressed="true">购买</a>';
             soldout = '<button class="btn btn-secondary" disabled="true">售罄</button>';
-
-            if( (obj.need_monitor && obj.stock) ||  ! obj.need_monitor )
+            if( (obj.company__need_monitor && obj.stock) ||  ! obj.company__need_monitor )
                 return sold;
             else
                 return soldout;
