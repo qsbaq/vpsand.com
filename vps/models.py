@@ -32,7 +32,7 @@ class Goods(models.Model):
     lineChoices = (
         ('CN2-GT','CN2-GT'),
         ('CN2-GIA','CN2-GIA'),
-
+        ('BGP','BGP')
         ('PCCW','PCCW'),
     )
     dcChoices = (
