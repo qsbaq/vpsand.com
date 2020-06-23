@@ -26,7 +26,7 @@
                 <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="//hubjj.com">{{title}}</a>
+                <a class="nav-link" href="//vpsand.com">{{title}}</a>
             </li>
 
             </ul>
@@ -212,7 +212,7 @@ var app = new Vue({
             this.currentPage = 1;
             if( search != '' ){
                 this.arrs = this.list.filter(function(item){
-                    if ( item.company__name.toUpperCase().includes(search) || item.company__name.toLowerCase().includes(search)  )
+                    if ( item.company__name.toLowerCase().includes( search.toLowerCase() )   )
                         return item;
                 })
             }else{
