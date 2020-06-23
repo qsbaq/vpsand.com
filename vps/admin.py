@@ -9,9 +9,9 @@ from django.utils.html import format_html
 
 
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ('name', 'url','update_time')
+    list_display = ('name', 'url','need_monitor','out_of_stock_string','update_time')
     list_per_page = 20
-    list_filter = ('name', )
+    list_filter = ('name','need_monitor' )
     search_fields = ['name']
     list_display_links = ('name',)
 
