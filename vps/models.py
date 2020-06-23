@@ -61,7 +61,7 @@ class Goods(models.Model):
     quarter = models.CharField('季付', max_length=256,blank=True,null=True)
     month = models.CharField('月付', max_length=256,blank=True,null=True)
     stock = models.IntegerField( choices=stockChoices,verbose_name='库存' , default=0 )
-    sort = models.IntegerField(verbose_name='排序',default=99,help_text='数字越大越靠前')
+    sort = models.IntegerField(verbose_name='排序',default=66,help_text='数字越大越靠前')
     update_time = models.DateTimeField(auto_now=True)
 
     def __str__(self):
