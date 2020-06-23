@@ -13,7 +13,7 @@ import sys,threading
 lock = threading.Semaphore(12)
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        goodsObj = Goods.objects.all()
+        goodsObj = Goods.objects.filter(company__need_monitor = 1 )
         
         for g in goodsObj:
             t = threading.Thread(target=self.updateStock, args=(g,))

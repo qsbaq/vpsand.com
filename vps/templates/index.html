@@ -14,6 +14,7 @@
 </head>
 
 <body>
+    <main id="app">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="//www.jiloc.com">老季博客</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,23 +30,39 @@
             </li>
 
             </ul>
+
+            <form class="form-inline mt-2 mt-md-0">
+                <input class="form-control mr-sm-2 search" type="text" placeholder="Search" aria-label="Search" v-model="search">
+            </form>
+
             {% if user.get_username %}
                 <a href="/admin" class="btn btn-info">欢迎：{{user.get_username}} , 后台管理</a>
             {% endif %}
-            <!-- <form class="form-inline mt-2 mt-md-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form> -->
+
         </div>
     </nav>
 
 
-    <div class="container-fluid" id="app">
+    <div class="container-fluid">
         <section class="text-center">
             <h1>VPS库存监控列表</h1>
             <p><a href="//www.jiloc.com/go/bwh">搬瓦工</a>优惠码：<code>BWH3HYATVBJW</code> ,
             <p>数据最后更新时间：<code>{{update_time}}</code></p>
-    </section>
+        </section>
+
+        <!-- <div class="col-md-3 mb-3">
+            <select class="custom-select" id="company" @change="searchData">
+                <option value=""> -- </option>
+                <template v-for='val in companys'>
+                    <option v-bind:value="val">{[val]}</option>
+                </template>
+            </select>
+        </div> -->
+
+        <!-- <div class="col-7">
+            <input type="text" class="form-control" placeholder="Search" name="search" @change="searchData">
+        </div> -->
+
         <table class="table table-striped table-bordered table-hover">
             <thead>
             <tr>
@@ -53,8 +70,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(item,index) in items">
-                <td>{[index+1]}</td>
+            <tr v-for="(item,index) in page_arrs" :key="index">
+                <td>{[index+1]}#</td>
                 <td>{[item.company__name]}</td>
                 <td>{[item.dc]}</td>
                 <td>{[item.cpu]}</td>
@@ -70,31 +87,52 @@
             </tr>
             </tbody>
         </table>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination  justify-content-center">
+              <li :class="current_page == 1 ? 'page-item disabled' : 'page-item' "><a class="page-link" href="#" @click="primaryPage"> << </a></li>
+              <li :class="current_page == 1 ? 'page-item disabled' : 'page-item' "><a class="page-link" href="#" @click="prePage"> < </a></li>
+              <li v-for="index in indexs" :class="current_page == index ? 'page-item active' : 'page-item' "><a class="page-link" href="#"  @click="btnClick(index)">{[ index ]}</a></li>
+              <li class="page-item disabled"><a class="page-link" href="#" aria-disabled="true">{[current_page]} / {[all]}</a></li>
+              <li :class="current_page == all ? 'page-item disabled' : 'page-item' "><a class="page-link" href="#" @click="nextPage()"> > </a></li>
+              <li :class="current_page == all ? 'page-item disabled' : 'page-item' "><a class="page-link" href="#" @click="lastPage"> >> </a></li>
+            </ul>
+        </nav>
+
     </div>
 
+    
     <footer>
         <div class="container text-center" >
             <p>本页面所有数据均来自互联网。如侵害到您的权益请联系 <a href="mailto:admin@laoji.org">admin#laoji.org </a>。</p>
         </div>
     </footer>
 
-
+</main>
 </body>
-
 <script type="text/javascript">
 $(function () {
-  var nua = navigator.userAgent
-  var isAndroid = (nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1 && nua.indexOf('Chrome') === -1)
-  if (isAndroid) {
-    $('select.form-control').removeClass('form-control').css('width', '100%')
-  }
+    var nua = navigator.userAgent
+    var isAndroid = (nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1 && nua.indexOf('Chrome') === -1)
+    if (isAndroid) {
+        $('select.form-control').removeClass('form-control').css('width', '100%')
+    }
 })
+
+
+
 var app = new Vue({
     delimiters:['{[', ']}'],
     el: '#app',
     data: {
-        items: {{goods|safe}},
-        titles : ['序号','服务商','机房',"CPU",'内存','硬盘','带宽','流量','线路','IPV4','架构','价格','库存']
+        arrs: {},
+        list:{{goods|safe}},
+        search:'',
+        companys:[],
+        titles : ['序号','服务商','机房',"CPU",'内存','硬盘','带宽','流量','线路','IPV4','架构','价格','库存'],
+        currentPage : 1,//当前页号
+        pagesize :12, //每页大小
+        all:0,
     },　　
     filters:{
         formatPrice: function(obj){
@@ -109,14 +147,15 @@ var app = new Vue({
         },
         stockToBuy: function(obj){
             if( obj.stock === 1 ){
-                return '<a href="//www.jiloc.com/go/bwh-'+obj.pid+'" class="btn btn-primary active" role="button" aria-pressed="true">购买</a>';
+                // return '<a href="//www.jiloc.com/go/bwh-'+obj.pid+'" class="btn btn-primary active" role="button" aria-pressed="true">购买</a>';
+                return '<a href="'+obj.company__url+obj.pid'" class="btn btn-primary active" role="button" aria-pressed="true">购买</a>';
             }else{
                 return '<button class="btn btn-secondary" disabled="true">售罄</button>';
             }
         }
     },
     created: function () {
-        var self = this;
+        // var self = this;
         // $.ajax({
         //     // url: 'https://vpsdalao.com/api/records?provider=Bandwagon',
         //     url: '/ajax_goods',
@@ -129,7 +168,87 @@ var app = new Vue({
         // }).fail(function () {
         //     console.log('失败');
         // })
+        this.arrs = this.list;
+        let tmp = [];
+        this.arrs.map((item)=>{tmp.push(item.company__name)});
+        this.companys = new Set(tmp);
     },
+    computed:{
+        page_arrs(){
+            let {currentPage,pagesize,arrs} = this
+            this.all = Math.ceil(this.arrs.length/pagesize)
+            return arrs.slice((currentPage-1)*pagesize,currentPage*pagesize)
+        },
+        indexs: function(){
+            var left = 1;
+            var right = this.all;
+            var ar = [];
+            if(this.all>= 5){
+                if(this.currentPage > 3 && this.currentPage < this.all-2){
+                    left = this.currentPage - 2
+                    right = this.currentPage + 2
+                }else{
+                    if(this.currentPage<=3){
+                        left = 1
+                        right = 5
+                    }else{
+                        right = this.all
+                        left = this.all -4
+                    }
+                }
+            }
+            while (left <= right){
+                ar.push(left)
+                left ++
+            }
+            return ar
+        },
+        current_page(){
+            return this.currentPage
+        }
+    },
+    methods: {
+        searchData(search){
+            this.currentPage = 1;
+            if( search != '' ){
+                this.arrs = this.list.filter(function(item){
+                    if ( item.company__name.includes(search)  )
+                        return item;
+                })
+            }else{
+                this.arrs = this.list;
+            }
+        },
+        primaryPage(){
+            this.currentPage = 1
+        },
+        prePage(){
+            if(this.currentPage == 1){
+                return
+            }
+            this.currentPage = this.currentPage - 1
+        },
+        nextPage(){
+            if(this.currentPage == Math.ceil(this.arrs.length/this.pagesize)){
+                return
+            }
+            this.currentPage = this.currentPage + 1
+        },
+        lastPage(){
+            this.currentPage = Math.ceil(this.arrs.length/this.pagesize)
+        },
+        btnClick: function(data){//页码点击事件
+            if(data != this.currentPage){
+                this.currentPage = data 
+            }
+        },
+    },
+    watch:{
+        search(search){
+            console.log(search);
+            this.searchData(search);
+        }
+    }
 
 })
 </script>
