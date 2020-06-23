@@ -25,8 +25,8 @@ def index(request):
                                         'company__url',
                                         'company__connect_pid',
                                         'company__need_monitor',
-                                        'is_topic'
-            ).order_by('-is_topic')
+                                        'sort'
+            ).order_by('-sort')
     lastObj = Goods.objects.values('update_time').last()
     update_time = lastObj['update_time'].strftime("%Y-%m-%d %H:%M:%S")
     return render(request, 'index.html', {'goods': json.dumps(list(goods)) ,
