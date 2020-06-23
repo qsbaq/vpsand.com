@@ -18,12 +18,12 @@ class CompanyAdmin(admin.ModelAdmin):
 
 
 class GoodsAdmin(admin.ModelAdmin):
-    list_display = ('id','company', 'pid', 'ram','cpu','dc','disk','bandwidth','traffic','route','ipv4','arch','annual', 'stockStatus','is_topic', 'update_time')
+    list_display = ('id','company', 'pid', 'ram','cpu','dc','disk','bandwidth','traffic','route','ipv4','arch','annual', 'stockStatus','sort', 'update_time')
     list_per_page = 100
     # list_editable = ['is_topic',]
-    list_filter = ('company__name','dc','stock','arch','is_topic' )
+    list_filter = ('company__name','dc','stock','arch' )
     # search_fields = ['companyId']
-    ordering = ('company',)
+    ordering = ('-sort','-id')
     # readonly_fields = ('stock', )
     # list_display_links = ('company',)
     def stockStatus(self , obj):
