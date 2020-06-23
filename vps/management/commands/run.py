@@ -22,7 +22,7 @@ class Command(BaseCommand):
     def updateStock(self,good):
         lock.acquire()	#计数器获得锁
         url = good.company.url + str(good.pid)
-        header={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'}
+        header={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36'}
         try:
             req=request.Request(url,headers=header)
             page=request.urlopen(req,timeout=2).read()
