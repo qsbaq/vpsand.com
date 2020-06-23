@@ -59,6 +59,7 @@ class Goods(models.Model):
     quarter = models.CharField('季付', max_length=256,blank=True,null=True)
     month = models.CharField('月付', max_length=256,blank=True,null=True)
     stock = models.IntegerField( choices=stockChoices,verbose_name='库存' , default=0 )
+    is_topic = models.IntegerField(verbose_name='置顶',choices=booleanChoices,default=0)
     update_time = models.DateTimeField(auto_now=True)
 
     def __str__(self):
