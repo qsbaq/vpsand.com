@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>VPS库存监控</title>
+    <title>{{title}}</title>
     <meta name="keywords" content="搬瓦工,VPS,bandwagonhost,搬瓦工优惠码,搬瓦工导购,搬瓦工库存,搬瓦工库存实时监控,搬瓦工库存监控|搬瓦工测评">
     <meta name="description" content="VPS库存监控是为方便VPS爱好者监控库存而推出，数据实时更新，完全免费，欢迎使用。">
     <!-- CSS only -->
@@ -26,7 +26,7 @@
                 <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="//hubjj.com">VPS库存监控列表</a>
+                <a class="nav-link" href="//hubjj.com">{{title}}</a>
             </li>
 
             </ul>
@@ -45,7 +45,7 @@
 
     <div class="container-fluid">
         <section class="text-center">
-            <h1>VPS库存监控列表</h1>
+            <h1>{{title}}</h1>
             <p><a href="//www.jiloc.com/go/bwh">搬瓦工</a>优惠码：<code>BWH3HYATVBJW</code> ,
             <p>数据最后更新时间：<code>{{update_time}}</code></p>
         </section>
@@ -148,7 +148,7 @@ var app = new Vue({
         stockToBuy: function(obj){
             if( obj.stock === 1 ){
                 // return '<a href="//www.jiloc.com/go/bwh-'+obj.pid+'" class="btn btn-primary active" role="button" aria-pressed="true">购买</a>';
-                return '<a href="'+obj.company__url+obj.pid'" class="btn btn-primary active" role="button" aria-pressed="true">购买</a>';
+                return '<a href="'+obj.company__url+obj.pid+'" class="btn btn-primary active" role="button" aria-pressed="true">购买</a>';
             }else{
                 return '<button class="btn btn-secondary" disabled="true">售罄</button>';
             }
@@ -212,7 +212,7 @@ var app = new Vue({
             this.currentPage = 1;
             if( search != '' ){
                 this.arrs = this.list.filter(function(item){
-                    if ( item.company__name.includes(search)  )
+                    if ( item.company__name.toUpperCase().includes(search) || item.company__name.toLowerCase().includes(search)  )
                         return item;
                 })
             }else{
