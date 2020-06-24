@@ -65,7 +65,7 @@ class Goods(models.Model):
     update_time = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return 'PID：{} - 年付：${}'.format(self.pid,self.annual)
+        return '{} - PID：{} - {}/年 - {}/月'.format(self.company.name,self.pid,self.annual,self.month)
 
     class Meta:
         managed = True
