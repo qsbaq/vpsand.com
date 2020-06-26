@@ -28,7 +28,7 @@ def index(request):
                                         'sort'
             ).order_by('-sort')
     lastObj = Goods.objects.values('update_time').last()
-    update_time = lastObj['update_time'].strftime("%Y-%m-%d %H:%M:%S")
+    update_time = lastObj['update_time'].strftime("%Y-%m-%d %H:%M:%S") if lastObj else None
     return render(request, 'index.html', {'goods': json.dumps(list(goods)) ,
                                             'update_time':update_time,
                                             'title':admin.site.site_header ,
