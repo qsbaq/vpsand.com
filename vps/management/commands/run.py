@@ -36,6 +36,10 @@ class Command(BaseCommand):
 
                 good.stock = stock
                 good.save()  
+                
+        except requests.exceptions.Timeout as e:
+            status = 'TimeOut'
+            stock = 'Unknown'
 
         except Exception as e :
             status = e
