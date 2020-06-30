@@ -7,7 +7,7 @@
 
 ## 安装/Install
 本环境需要python3的运行环境以及python3-pip
-下载源码后运行 `pip3 install django`
+下载源码后运行 `pip3 install django ; pip3 install requests`
 然后将数据库导入
 > python3 manage.py makemigrations --merge ; python3 manage.py migrate
 
