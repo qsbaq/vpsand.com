@@ -6,7 +6,7 @@ python .\manage.py run
 '''
 from django.core.management.base import BaseCommand, CommandError
 from vps.models import Company ,Goods
-from urllib import request
+import requests
 import time
 # from vps.models import Goods
 import sys,threading
@@ -24,20 +24,27 @@ class Command(BaseCommand):
         url = good.company.url + str(good.pid)
         header={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36'}
         try:
-            req=request.Request(url,headers=header)
-            page=request.urlopen(req,timeout=2).read().decode('utf-8')
-            status = '200'
-            if str(page).find(good.company.out_of_stock_string) > 0 :
-                stock = 0    
-            else:
-                stock = 1
+            res=requests.get(url,headers=header,timeout=2)
+            res.encoding='utf-8'
+            status = res.status_code
+            if status != 200 :
+                raise Exception(status)
+            else :
+                if str(page).find(good.company.out_of_stock_string) > 0 :
+                    stock = 0    
+                else:
+                    stock = 1
 
-            good.stock = stock
-            good.save()  
+                good.stock = stock
+                good.save()  
 
-        except :
+        except requests.exceptions.ConnectTimeout as e:
             status = 'TimeOut'
             stock = 'Unknown'
 
-        print(time.strftime('%Y-%m-%d %H:%M:%S')+' -- '+url + ' -- ' + str(status) +' -- '+ str(stock))
+        except Exception as e :
+            status = e
+            stock = 'Unknown'
+
+        print(time.strftime('%Y-%m-%d %H:%M:%S')+' -- '+ url + ' -- ' + str(status) +' -- '+ str(stock))
         lock.release()	#计数器释放锁
