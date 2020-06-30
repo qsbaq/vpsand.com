@@ -30,7 +30,7 @@ class Command(BaseCommand):
             if status != 200 :
                 raise Exception(status)
             else :
-                if str(page).find(good.company.out_of_stock_string) > 0 :
+                if str(res.text).find(good.company.out_of_stock_string) > 0 :
                     stock = 0    
                 else:
                     stock = 1
