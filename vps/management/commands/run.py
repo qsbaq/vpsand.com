@@ -6,11 +6,10 @@ python .\manage.py run
 '''
 from django.core.management.base import BaseCommand, CommandError
 from vps.models import Company ,Goods
-import requests
-import time
-# from vps.models import Goods
+import requests , time
 import sys,threading
 lock = threading.Semaphore(12)
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
         goodsObj = Goods.objects.filter(company__need_monitor = 1 )
