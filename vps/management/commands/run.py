@@ -41,8 +41,13 @@ class Command(BaseCommand):
                     stock = 0    
                 else:
                     stock = 1
-
-                if( goodsObj.stock == 0 and stock == 1):
+                
+                ostock = goodsObj.stock
+                
+                goodsObj.stock = stock
+                goodsObj.save()  
+                
+                if( ostock == 0 and stock == 1):
                     msg = '<a href="{}">{}</a>'.format( url,goodsObj.company.name+' '+
                                                         goodsObj.dc+' '+
                                                         str(goodsObj.cpu)+' '+
@@ -59,8 +64,7 @@ class Command(BaseCommand):
                         recipient_list = mails
                     )
 
-                goodsObj.stock = stock
-                goodsObj.save()  
+               
                 
         except requests.exceptions.Timeout as e:
             status = 'TimeOut'
