@@ -28,6 +28,9 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/">Home</a>
             </li>
+            <li>
+                <a class="nav-link" data-toggle="modal" data-target="#myModal">通知订阅</a>
+            </li>
             <li class="nav-item ">
                 <a class="nav-link" href="//www.jiloc.com">老季博客</a>
             </li>
@@ -50,7 +53,7 @@
         <section class="text-center">
             <h1>{{title}}</h1>
             <p><a href="//www.jiloc.com/go/bwh">搬瓦工</a>优惠码：<code>BWH3HYATVBJW</code> ,
-            <p>数据最后更新时间：<code>{{update_time}}</code></p>
+            
         </section>
 
         <!-- <div class="col-md-3 mb-3">
@@ -105,9 +108,36 @@
 
     </div>
 
-    
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModal">通知订阅</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="myform">
+                    <div class="form-group">
+                        <label for="email" class="col-form-label">邮箱:</label>
+                        <input type="email" class="form-control" required id="email">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary saveModal">保存</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="container text-center" >
+            <p>数据最后更新时间：<code>{{update_time}}</code></p>
             <p><a href="https://github.com/qsbaq/vps-stock-monitor">GitHub</a> Author: <a href="//www.jiloc.com">Jerry</a></p>
         </div>
     </footer>
@@ -121,6 +151,29 @@ $(function () {
     if (isAndroid) {
         $('select.form-control').removeClass('form-control').css('width', '100%')
     }
+
+    function isValidEmailAddress(emailAddress) {
+        var myreg = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+        return myreg.test(emailAddress);
+    };
+
+    $('.saveModal').click(function(){
+        var email = $('#email').val();
+        if( isValidEmailAddress(email) == false ){
+            alert('邮箱格式错误.');
+        }
+        $.ajax({ 
+            url: "/subscribe", 
+            method:'GET',
+            data: { email: email },
+            dataType:"html",//服务器返回的数据类型
+            success: function(data){
+                alert(data)
+            }
+        });
+
+    });
+
 })
 
 

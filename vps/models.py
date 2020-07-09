@@ -74,3 +74,15 @@ class Goods(models.Model):
         verbose_name = '商品信息'
         verbose_name_plural = '商品信息'
 
+
+class Subscribe(models.Model):
+    email = models.EmailField(verbose_name="邮箱",unique=True)
+    # status = models.IntegerField(verbose_name='有效性',choices=booleanChoices,default=1)
+    update_time = models.DateTimeField(auto_now=True)    
+
+    class Meta:
+        managed = True
+        db_table = 'subscribe'
+        verbose_name = '订阅通知'
+        verbose_name_plural = '订阅通知'
+

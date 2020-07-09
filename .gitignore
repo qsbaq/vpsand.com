@@ -4,6 +4,7 @@
 *.pyc
 __pycache__/
 settings.py
+mysettings.py
 local_settings.py
 db.sqlite3
 vps/static/admin/*

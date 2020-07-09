@@ -34,7 +34,9 @@ class GoodsAdmin(admin.ModelAdmin):
     stockStatus.short_description = '库存'
 
 
-
+class SubscribeAdmin(admin.ModelAdmin):
+    list_display = ('id','email','update_time')
+    search_fields = ['email',]
 
 
 
@@ -43,6 +45,7 @@ admin.site.register(models.Company, CompanyAdmin)
 
 admin.site.register(models.Goods, GoodsAdmin)
 
+admin.site.register(models.Subscribe, SubscribeAdmin)
 
 admin.site.site_header = 'VPS库存监控系统'
 admin.site.site_title = 'VPS库存监控系统'

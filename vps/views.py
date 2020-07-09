@@ -1,9 +1,7 @@
 from django.shortcuts import render
-from vps.models import Company ,Goods
-from django.http import JsonResponse
+from vps.models import Goods,Subscribe
 from django.contrib import admin
-
-from django.core import serializers
+from django.http import HttpResponse
 import json
 # Create your views here.
 
@@ -33,3 +31,13 @@ def index(request):
                                             'update_time':update_time,
                                             'title':admin.site.site_header ,
     })
+
+
+def subscribe(request):
+    try:
+        Subscribe.objects.create(email = request.GET.get('email'))
+    except :
+        pass
+    return HttpResponse('1')
+    
+
