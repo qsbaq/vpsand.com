@@ -10,6 +10,7 @@ from vps.models import Goods,Subscribe
 import requests , time
 import threading
 from django.core.mail import send_mail, send_mass_mail
+import vpsmonitor.settings as settings
 
 lock = threading.Semaphore(12)
 
@@ -54,7 +55,7 @@ class Command(BaseCommand):
                     send_mail(
                         subject = '{} 上新啦_VPSAND.COM'.format(goodsObj.company.name),
                         message = msg,
-                        from_email = DEFAULT_FROM_EMAIL, 
+                        from_email = settings.DEFAULT_FROM_EMAIL, 
                         recipient_list = mails
                     )
 
