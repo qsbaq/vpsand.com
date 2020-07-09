@@ -168,7 +168,10 @@ $(function () {
             data: { email: email },
             dataType:"html",//服务器返回的数据类型
             success: function(data){
-                alert(data)
+                if (data == 1){
+                    alert('保存成功.');
+                    $('#myModal').modal('toggle');
+                }
             }
         });
 
