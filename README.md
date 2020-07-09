@@ -20,7 +20,7 @@
 
 
 ## 配置邮件
-将vpsmonitor/mysettings_local.py 重命名为 vpsmonitor/mysettings.py ，并设置好对应的邮箱信息。
+将vpsmonitor/settings_local.py 重命名为 vpsmonitor/settings.py ，并设置好对应的邮箱信息。
 
 ## 定时监控/Crontab
 定时每分钟检查VPS商家库存情况，需要在商家的属性中设定`检查库存`：`是`
