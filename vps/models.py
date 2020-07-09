@@ -77,7 +77,7 @@ class Goods(models.Model):
 
 class Subscribe(models.Model):
     email = models.EmailField(verbose_name="邮箱",unique=True)
-    # status = models.IntegerField(verbose_name='有效性',choices=booleanChoices,default=1)
+    status = models.IntegerField(verbose_name='有效',choices=booleanChoices,default=1)
     update_time = models.DateTimeField(auto_now=True)    
 
     class Meta:

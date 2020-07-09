@@ -35,7 +35,7 @@ class GoodsAdmin(admin.ModelAdmin):
 
 
 class SubscribeAdmin(admin.ModelAdmin):
-    list_display = ('id','email','update_time')
+    list_display = ('id','email','status','update_time')
     search_fields = ['email',]
 
 
