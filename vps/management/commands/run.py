@@ -44,11 +44,11 @@ class Command(BaseCommand):
                 if( goodsObj.stock == 0 and stock == 1):
                     msg = '<a href="{}">{}</a>'.format( url,goodsObj.company.name+' '+
                                                         goodsObj.dc+' '+
-                                                        goodsObj.cpu+' '+
+                                                        str(goodsObj.cpu)+' '+
                                                         goodsObj.ram+' '+
                                                         goodsObj.disk+' '+
                                                         goodsObj.bandwidth+' '+
-                                                        goodsObj.ipv4+' '+
+                                                        str(goodsObj.ipv4)+' '+
                                                         goodsObj.arch
                                                 )
                     send_mail(
