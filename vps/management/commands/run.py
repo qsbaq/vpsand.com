@@ -47,22 +47,22 @@ class Command(BaseCommand):
                 goodsObj.stock = stock
                 goodsObj.save()  
                 
-                # if( ostock == 0 and stock == 1):
-                #     msg = '<a href="{}">{}</a>'.format( url,goodsObj.company.name+' '+
-                #                                         goodsObj.dc+' '+
-                #                                         str(goodsObj.cpu)+' '+
-                #                                         goodsObj.ram+' '+
-                #                                         goodsObj.disk+' '+
-                #                                         goodsObj.bandwidth+' '+
-                #                                         str(goodsObj.ipv4)+' '+
-                #                                         goodsObj.arch
-                #                                 )
-                #     send_mail(
-                #         subject = '{} 上新啦_VPSAND.COM'.format(goodsObj.company.name),
-                #         message = msg,
-                #         from_email = settings.DEFAULT_FROM_EMAIL, 
-                #         recipient_list = mails
-                #     )
+                if( ostock == 0 and stock == 1):
+                    msg = '<a href="{}">{}</a>'.format( url,goodsObj.company.name+' '+
+                                                        goodsObj.dc+' '+
+                                                        str(goodsObj.cpu)+' '+
+                                                        goodsObj.ram+' '+
+                                                        goodsObj.disk+' '+
+                                                        goodsObj.bandwidth+' '+
+                                                        str(goodsObj.ipv4)+' '+
+                                                        goodsObj.arch
+                                                )
+                    send_mail(
+                        subject = '{} 上新啦_VPSAND.COM'.format(goodsObj.company.name),
+                        message = msg,
+                        from_email = settings.DEFAULT_FROM_EMAIL, 
+                        recipient_list = mails
+                    )
 
                
                 
