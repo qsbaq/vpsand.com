@@ -18,6 +18,10 @@
 `python3 manage.py runserver 0.0.0.0:80`
 启动后，在浏览器中打开 `http://127.0.0.1/admin` 的“商品”及“商家”中填入数据，否则首页无法运行。
 
+
+## 配置邮件
+将vpsmonitor/mysettings_local.py 重命名为 vpsmonitor/mysettings.py ，并设置好对应的邮箱信息。
+
 ## 定时监控/Crontab
 定时每分钟检查VPS商家库存情况，需要在商家的属性中设定`检查库存`：`是`
 然后将以下命令加入到crontab中。
