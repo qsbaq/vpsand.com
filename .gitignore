@@ -3,8 +3,6 @@
 *.pot
 *.pyc
 __pycache__/
-settings.py
-mysettings.py
-local_settings.py
+vpsmonitor/settings.py
 db.sqlite3
 vps/static/admin/*
