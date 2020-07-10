@@ -61,6 +61,7 @@ class Command(BaseCommand):
                                                         +'<br />年付：'+ (goodsObj.annual if goodsObj.annual else ' - ')
                                                         +'<br />季付：'+ (goodsObj.quarter if goodsObj.quarter else ' - ')
                                                         +'<br />月付：'+ (goodsObj.month if goodsObj.month else ' - ')
+                                                        +'<br />链接直达：'+url
                                                 )
                     send_mail(
                         subject = '{} 上新啦!_VPSAND.COM'.format(goodsObj.company.name),
