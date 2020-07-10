@@ -48,20 +48,22 @@ class Command(BaseCommand):
                 goodsObj.save()  
                 
                 if( ostock == 0 and stock == 1):
-                    msg = '<a href="{}">{}</a>'.format( url,goodsObj.company.name+' '+
-                                                        goodsObj.dc+' '+
-                                                        str(goodsObj.cpu)+' '+
-                                                        goodsObj.ram+' '+
-                                                        goodsObj.disk+' '+
-                                                        goodsObj.bandwidth+' '+
-                                                        str(goodsObj.ipv4)+' '+
-                                                        goodsObj.arch
+                    msg = goodsObj.company.name+' 上新啦! '+url
+                    html_msg = '<a href="{}">{}</a>'.format( url,goodsObj.company.name
+                                                        +' 位置：'+ goodsObj.dc
+                                                        +' CPU：'+ str(goodsObj.cpu)
+                                                        +' 内存：'+ goodsObj.ram
+                                                        +' 硬盘：'+ goodsObj.disk
+                                                        +' 带宽：'+ goodsObj.bandwidth
+                                                        +' IPV4：'+ str(goodsObj.ipv4)
+                                                        +' 架构：'+ goodsObj.arch
                                                 )
                     send_mail(
-                        subject = '{} 上新啦_VPSAND.COM'.format(goodsObj.company.name),
+                        subject = '{} 上新啦!_VPSAND.COM'.format(goodsObj.company.name),
                         message = msg,
                         from_email = settings.DEFAULT_FROM_EMAIL, 
-                        recipient_list = mails
+                        recipient_list = mails,
+                        html_message = html_msg,
                     )
 
                
