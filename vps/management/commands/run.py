@@ -49,14 +49,18 @@ class Command(BaseCommand):
                 
                 if( ostock == 0 and stock == 1):
                     msg = goodsObj.company.name+' 上新啦! '+url
-                    html_msg = '<a href="{}">{}</a>'.format( url,goodsObj.company.name
-                                                        +' 位置：'+ goodsObj.dc
-                                                        +' CPU：'+ str(goodsObj.cpu)
-                                                        +' 内存：'+ goodsObj.ram
-                                                        +' 硬盘：'+ goodsObj.disk
-                                                        +' 带宽：'+ goodsObj.bandwidth
-                                                        +' IPV4：'+ str(goodsObj.ipv4)
-                                                        +' 架构：'+ goodsObj.arch
+                    html_msg = '<a href="{}">{}</a>'.format( url,
+                                                        goodsObj.company.name
+                                                        +'<br />位置：'+ goodsObj.dc
+                                                        +'<br />CPU：'+ str(goodsObj.cpu)
+                                                        +'<br />内存：'+ goodsObj.ram
+                                                        +'<br />硬盘：'+ goodsObj.disk
+                                                        +'<br />带宽：'+ goodsObj.bandwidth
+                                                        +'<br />IPV4：'+ str(goodsObj.ipv4)
+                                                        +'<br />架构：'+ goodsObj.arch
+                                                        +'<br />年付：'+ (goodsObj.annual if goodsObj.annual else ' - ')
+                                                        +'<br />季付：'+ (goodsObj.quarter if goodsObj.quarter else ' - ')
+                                                        +'<br />月付：'+ (goodsObj.month if goodsObj.month else ' - ')
                                                 )
                     send_mail(
                         subject = '{} 上新啦!_VPSAND.COM'.format(goodsObj.company.name),
