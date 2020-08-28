@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from vps.models import Goods,Subscribe
+from vps.models import Goods,Subscribe,Passwd
 from django.contrib import admin
 from django.http import HttpResponse
-import json
+import json,hashlib
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -41,3 +42,34 @@ def subscribe(request):
     return HttpResponse('1')
     
 
+def tools(request):
+    return render(request,'tools.html',{})
+
+
+
+
+@login_required
+def encrypt(request):
+    input_str = request.GET.get('input_str')
+    method = request.GET.get('type')
+    if method == 'MD5' :
+        output = md5(input_str)
+
+        try :
+            Passwd.objects.add(strings=input_str,md5=output)
+        except:
+            pass
+
+    return HttpResponse(output)
+
+
+
+
+
+
+
+
+def md5(jstr):
+    hl = hashlib.md5()
+    hl.update(jstr.encode('utf-8'))
+    return hl.hexdigest()

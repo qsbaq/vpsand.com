@@ -86,3 +86,8 @@ class Subscribe(models.Model):
         verbose_name = '订阅通知'
         verbose_name_plural = '订阅通知'
 
+
+class Passwd(models.Model):
+    strings = models.CharField(verbose_name='字符',blank=False,unique=True,null=False)
+    md5 = models.CharField(verbose_name='MD5值',blank=False,null=False)
+

@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<div class="row justify-content-md-center title"><h1>MD5加密/解密</h1></div>
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="alert_text"></div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="md5-tab" data-toggle="tab" href="#md5" role="tab" aria-controls="nav-home" aria-selected="true">MD5加解密</a>
+      <!-- <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+      <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a> -->
+    </div>
+</nav>
+
+
+
+<div class="tab-content" id="nav-tabContent">
+    
+    <div class="tab-pane fade show active" id="md5" role="tabpanel" aria-labelledby="md5-tab">
+        
+        <div class="row mt-4">
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <textarea class="form-control encrypt" rows="12" placeholder="MD5明文"></textarea>
+                </div>
+            </div>
+            <div class="btn-group-vertical text-center col-sm">
+                <button type="button" class="btn btn-primary btn-lg align-middle mb-4" @click.navite="encrypt()">MD5加密</button>
+                <button type="button" class="btn btn-primary btn-lg align-middle" @click.navite="decrypt()">MD5解密</button>
+            </div>
+
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <textarea class="form-control decrypt" placeholder="MD5密文" rows="12"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            　　
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+</div>
+
+{% endblock %}
+
+
+
+
+{% block script %}
+<script type="text/javascript">
+$('.alert').hide();
+var app = new Vue({
+    delimiters:['{[', ']}'],
+    el: '#app',
+    data: {
+        user:'{{ request.user }}',
+    },　　
+    filters:{
+        
+    },
+    created: function(){
+        
+    },
+    computed:{
+    },
+    methods: {
+        encrypt(){
+            if (this.user == 'AnonymousUser'){
+                $('.alert').show(300).delay(3000).hide(300)
+                $('.alert_text').html('请先登录');
+                return false;
+            }
+            let input_str = $('.encrypt').val();
+            if( input_str == '' ){
+                return false;
+            }
+            $.ajax({
+                url: '/encrypt',
+                type: 'GET',
+                data: {type:'MD5',input_str:input_str},
+                dataType: 'text'
+            }).then(function (res) {
+                
+                $('.decrypt').val(res);
+            }).fail(function () {
+                console.log('失败');
+            })
+
+        },
+        decrypt(){
+            alert('建设中...');
+        }
+
+        
+    },
+    watch:{
+        
+    }
+
+})
+</script>
+
+{% endblock %}

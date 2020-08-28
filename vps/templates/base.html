@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{title}}</title>
+    <meta name="keywords" content="国内VPS推荐,海外VPS推荐,搬瓦工,VPS,bandwagonhost,搬瓦工优惠码,搬瓦工导购,搬瓦工库存,搬瓦工库存实时监控,搬瓦工库存监控,搬瓦工测评">
+    <meta name="description" content="VPS库存监控检测系统是为方便VPS爱好者监控库存而推出，数据实时更新，完全免费。">
+    <!-- CSS only -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <script src="//cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+    <main id="app">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="//vpsand.com" title="{{title}}"><img src="/static/logo.png" style="height:32px;" /></a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li><a class="nav-link" href="/tools">工具</a></li>
+            <li class="nav-item ">
+                <a class="nav-link" href="//www.jiloc.com">老季博客</a>
+            </li>
+            </ul>
+
+
+
+            {% if user.get_username %}
+                <a href="/admin" class="btn btn-info">欢迎：{{user.get_username}} , 后台管理</a>
+            {% endif %}
+
+        </div>
+    </nav>
+
+
+
+
+    <div class="container-fluid">
+{% block content %}
+
+
+
+{% endblock %}
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModal">通知订阅</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="myform">
+                    <div class="form-group">
+                        <label for="email" class="col-form-label">邮箱:</label>
+                        <input type="email" class="form-control" required id="email">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary saveModal">保存</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+</body>
+
+<script type="text/javascript">
+
+$(function () {
+    var nua = navigator.userAgent
+    var isAndroid = (nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1 && nua.indexOf('Chrome') === -1)
+    if (isAndroid) {
+        $('select.form-control').removeClass('form-control').css('width', '100%')
+    }
+
+    function isValidEmailAddress(emailAddress) {
+        var myreg = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+        return myreg.test(emailAddress);
+    };
+
+    $('.saveModal').click(function(){
+        var email = $('#email').val();
+        if( isValidEmailAddress(email) == false ){
+            alert('邮箱格式错误.');
+        }
+        $.ajax({ 
+            url: "/subscribe", 
+            method:'GET',
+            data: { email: email },
+            dataType:"html",//服务器返回的数据类型
+            success: function(data){
+                if (data == 1){
+                    alert('保存成功.');
+                    $('#myModal').modal('toggle');
+                }
+            }
+        });
+
+    });
+
+})
+</script>
+
+{% block script %}
+
+
+{% endblock %}
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?388b65b9ee48795b6ba9a920dab261fa";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+        
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-2387381-25"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-2387381-25');
+</script>
+    
+    
+</html>
