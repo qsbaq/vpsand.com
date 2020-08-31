@@ -88,6 +88,8 @@ class Subscribe(models.Model):
 
 
 class Passwd(models.Model):
-    strings = models.CharField(verbose_name='字符',blank=False,unique=True,null=False)
-    md5 = models.CharField(verbose_name='MD5值',blank=False,null=False)
+    strings = models.CharField(verbose_name='字符',blank=False,unique=True,null=False,max_length=128)
+    md5 = models.CharField(verbose_name='MD5值',blank=False,null=False,max_length=128)
+    update_time = models.DateTimeField(verbose_name='更新时间',auto_now=True)
+
 
